@@ -30,10 +30,15 @@ const rl = readline.createInterface({
     output: process.stdout,
 });
 
-rl.question(`Enter a word to translate:`, (reply) => {
+rl.question(`Enter a word/phrase to translate:`, (reply) => {
+    if (!Array.from(reply.matchAll(/\b[a-zA-Z]+\b/g)).length) {
+        console.log("Error:", "\x1b[31mYour input must be literal!");
+        rl.close();
+        return;
+    }
     input = reply.trim().toLowerCase();
-    console.log("Original: " + reply);
-    console.log("Pig Latin: " + translatePhraseIntoPigLatin(input));
+    console.log("\x1b[33mOriginal: " + reply);
+    console.log("\x1b[32mPig Latin: " + translatePhraseIntoPigLatin(input));
     rl.close();
 });
 
